@@ -1,6 +1,6 @@
 package main
 
-import service "fivekilometer/users/cmd/service"
+import service "go-microservice-base/users/cmd/service"
 
 func main() {
 	service.Run()

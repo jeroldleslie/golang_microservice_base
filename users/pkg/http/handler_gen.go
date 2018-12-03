@@ -2,7 +2,7 @@
 package http
 
 import (
-	endpoint "fivekilometer/users/pkg/endpoint"
+	endpoint "go-microservice-base/users/pkg/endpoint"
 	http "github.com/go-kit/kit/transport/http"
 	mux "github.com/gorilla/mux"
 	http1 "net/http"

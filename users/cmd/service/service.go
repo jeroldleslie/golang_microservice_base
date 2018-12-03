@@ -1,10 +1,10 @@
 package service
 
 import (
-	"fivekilometer/users/pkg/endpoint"
-	"fivekilometer/users/pkg/http"
-	"fivekilometer/users/pkg/service"
-	"fivekilometer/users/pkg/db"
+	"go-microservice-base/users/pkg/endpoint"
+	"go-microservice-base/users/pkg/http"
+	"go-microservice-base/users/pkg/service"
+	"go-microservice-base/users/pkg/db"
 	"flag"
 	"fmt"
 	"net"

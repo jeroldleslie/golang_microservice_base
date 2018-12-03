@@ -3,7 +3,7 @@ package http
 import (
 	"context"
 	"encoding/json"
-	endpoint "fivekilometer/notificator/pkg/endpoint"
+	endpoint "go-microservice-base/notificator/pkg/endpoint"
 	http1 "github.com/go-kit/kit/transport/http"
 	"net/http"
 	"github.com/gorilla/mux"

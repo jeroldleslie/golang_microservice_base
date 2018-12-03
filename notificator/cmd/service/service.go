@@ -1,11 +1,11 @@
 package service
 
 import (
-	"fivekilometer/notificator/pkg/endpoint"
-	"fivekilometer/notificator/pkg/grpc"
-	"fivekilometer/notificator/pkg/grpc/pb"
-	"fivekilometer/notificator/pkg/http"
-	"fivekilometer/notificator/pkg/service"
+	"go-microservice-base/notificator/pkg/endpoint"
+	"go-microservice-base/notificator/pkg/grpc"
+	"go-microservice-base/notificator/pkg/grpc/pb"
+	"go-microservice-base/notificator/pkg/http"
+	"go-microservice-base/notificator/pkg/service"
 		"flag"
 	"fmt"
 	"net"

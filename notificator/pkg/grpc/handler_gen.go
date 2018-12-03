@@ -2,8 +2,8 @@
 package grpc
 
 import (
-	endpoint "fivekilometer/notificator/pkg/endpoint"
-	pb "fivekilometer/notificator/pkg/grpc/pb"
+	endpoint "go-microservice-base/notificator/pkg/endpoint"
+	pb "go-microservice-base/notificator/pkg/grpc/pb"
 	grpc "github.com/go-kit/kit/transport/grpc"
 )
 

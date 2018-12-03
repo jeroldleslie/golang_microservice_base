@@ -2,7 +2,7 @@ package service
 
 import (
 	"context"
-	io "fivekilometer/users/pkg/io"
+	io "go-microservice-base/users/pkg/io"
 
 	log "github.com/go-kit/kit/log"
 )

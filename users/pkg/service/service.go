@@ -3,11 +3,11 @@ package service
 import (
 	"context"
 	"errors"
-	"fivekilometer/users/pkg/db"
-	"fivekilometer/users/pkg/io"
+	"go-microservice-base/users/pkg/db"
+	"go-microservice-base/users/pkg/io"
 
 	"gopkg.in/mgo.v2/bson"
-	"fivekilometer/notificator/pkg/grpc/pb"
+	"go-microservice-base/notificator/pkg/grpc/pb"
 	"google.golang.org/grpc"
 	"github.com/go-kit/kit/log"
 )
@@ -79,7 +79,7 @@ func (b *basicUsersService) Create(ctx context.Context, user io.User) (u io.User
 		//notify users
 		reply, err := b.notificatorServiceClient.Notify(context.Background(), &pb.NotifyRequest{
 			Channel: "leslie channel",
-			Message: "Hi Leslie! Thank you for registrating in fivekilometer...",
+			Message: "Hi Leslie! Thank you for registrating in go-microservice-base...",
 		})
 
 		if reply != nil {
@@ -102,7 +102,7 @@ func (b *basicUsersService) GetById(ctx context.Context, id string) (u io.User, 
 		return u, err
 	}
 	defer session.Close()
-	c := session.DB("fivekilometer").C("users")
+	c := session.DB("go-microservice-base").C("users")
 
 	_id, err := bsonObject(id)
 	if err != nil {

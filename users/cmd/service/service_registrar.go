@@ -50,7 +50,7 @@ func registerService(consulAddress string,
 		Name:    "users",
 		Address: advertiseAddress,
 		Port:    port,
-		Tags:    []string{"users", "fivekilometer"},
+		Tags:    []string{"users", "go-microservice-base"},
 		Check:   &check,
 	}
 	registrar = consulsd.NewRegistrar(client, &asr, logger)

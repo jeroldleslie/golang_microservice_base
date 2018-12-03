@@ -2,8 +2,8 @@ package grpc
 
 import (
 	"context"
-	"fivekilometer/notificator/pkg/endpoint"
-	"fivekilometer/notificator/pkg/grpc/pb"
+	"go-microservice-base/notificator/pkg/endpoint"
+	"go-microservice-base/notificator/pkg/grpc/pb"
 	"github.com/go-kit/kit/transport/grpc"
 	context1 "golang.org/x/net/context"
 )

@@ -4,7 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	endpoint "fivekilometer/users/pkg/endpoint"
+	endpoint "go-microservice-base/users/pkg/endpoint"
 	http1 "net/http"
 
 	http "github.com/go-kit/kit/transport/http"

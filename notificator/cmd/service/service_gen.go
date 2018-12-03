@@ -2,7 +2,7 @@
 package service
 
 import (
-	endpoint "fivekilometer/notificator/pkg/endpoint"
+	endpoint "go-microservice-base/notificator/pkg/endpoint"
 	endpoint1 "github.com/go-kit/kit/endpoint"
 	log "github.com/go-kit/kit/log"
 	opentracing "github.com/go-kit/kit/tracing/opentracing"
@@ -10,7 +10,7 @@ import (
 	http "github.com/go-kit/kit/transport/http"
 	group "github.com/oklog/oklog/pkg/group"
 	opentracinggo "github.com/opentracing/opentracing-go"
-	service "fivekilometer/notificator/pkg/service"
+	service "go-microservice-base/notificator/pkg/service"
 	prometheus "github.com/go-kit/kit/metrics/prometheus"
 )
 

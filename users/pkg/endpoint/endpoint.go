@@ -2,8 +2,8 @@ package endpoint
 
 import (
 	"context"
-	io "fivekilometer/users/pkg/io"
-	service "fivekilometer/users/pkg/service"
+	io "go-microservice-base/users/pkg/io"
+	service "go-microservice-base/users/pkg/service"
 
 	endpoint "github.com/go-kit/kit/endpoint"
 )

@@ -2,9 +2,9 @@
 package service
 
 import (
-	endpoint "fivekilometer/users/pkg/endpoint"
-	http1 "fivekilometer/users/pkg/http"
-	service "fivekilometer/users/pkg/service"
+	endpoint "go-microservice-base/users/pkg/endpoint"
+	http1 "go-microservice-base/users/pkg/http"
+	service "go-microservice-base/users/pkg/service"
 	endpoint1 "github.com/go-kit/kit/endpoint"
 	log "github.com/go-kit/kit/log"
 	prometheus "github.com/go-kit/kit/metrics/prometheus"

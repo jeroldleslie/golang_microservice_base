@@ -2,7 +2,7 @@ package endpoint
 
 import (
 	"context"
-	service "fivekilometer/notificator/pkg/service"
+	service "go-microservice-base/notificator/pkg/service"
 
 	endpoint "github.com/go-kit/kit/endpoint"
 )

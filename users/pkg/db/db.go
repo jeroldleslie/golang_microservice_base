@@ -30,7 +30,7 @@ func EnsureIndexOnAllCollections(logger log.Logger) error {
 		logger.Log("err",err)
 		return err
 	}
-	c := session.DB("fivekilometer").C("users")
+	c := session.DB("go-microservice-base").C("users")
 	index := &mgo.Index{
 		Key:        []string{"id", "username"},
 		Unique:     true,
@@ -53,7 +53,7 @@ func GetUsersCollection(logger log.Logger)(c *mgo.Collection,err error) {
 		logger.Log("err",err)
 		return nil, err
 	}
-	return session.DB("fivekilometer").C("users"),err
+	return session.DB("go-microservice-base").C("users"),err
 }
 
 

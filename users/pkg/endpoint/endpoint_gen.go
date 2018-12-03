@@ -2,7 +2,7 @@
 package endpoint
 
 import (
-	service "fivekilometer/users/pkg/service"
+	service "go-microservice-base/users/pkg/service"
 	endpoint "github.com/go-kit/kit/endpoint"
 )
 

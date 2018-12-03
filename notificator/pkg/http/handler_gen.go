@@ -2,7 +2,7 @@
 package http
 
 import (
-	endpoint "fivekilometer/notificator/pkg/endpoint"
+	endpoint "go-microservice-base/notificator/pkg/endpoint"
 	http "github.com/go-kit/kit/transport/http"
 	http1 "net/http"
 	"github.com/gorilla/mux"
