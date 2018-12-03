@@ -1,0 +1,17 @@
+package: fivekilometer
+import:
+- package: github.com/go-kit/kit
+  version: v0.8.0
+- package: gopkg.in/mgo.v2
+- package: github.com/gorilla/mux
+  version: v1.6.2
+- package: github.com/gorilla/handlers
+  version: v1.4.0
+- package: github.com/canthefason/go-watcher
+  version: v0.2.4
+- package: github.com/hashicorp/consul
+  version: v1.4.0
+  subpackages:
+  - api
+- package: github.com/satori/go.uuid
+  version: v1.2.0

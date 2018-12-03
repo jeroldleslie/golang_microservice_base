@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package pb;
+
+//The Notificator service definition.
+service Notificator {
+    rpc Notify (NotifyRequest) returns (NotifyReply);
+}
+
+message NotifyRequest {
+    string channel = 1;
+    string message = 2;
+}
+
+message NotifyReply {
+    string response = 1;
+}
+
