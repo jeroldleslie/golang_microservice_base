@@ -1,0 +1,40 @@
+syntax = "proto3";
+
+package pb;
+
+
+//The Auth service definition.
+service Auth {
+ rpc Login         (LoginRequest        ) returns (LoginReply        );
+ rpc Logout        (LogoutRequest       ) returns (LogoutReply       );
+ rpc ValidateToken (ValidateTokenRequest) returns (ValidateTokenReply);
+}
+
+message LoginRequest {
+ string username = 1;
+ repeated string roles = 2;
+ map<string, string> others = 3;
+}
+
+message LoginReply {
+ string token = 1;
+}
+
+message LogoutRequest {
+ string token = 1;
+}
+
+message LogoutReply {
+ bool status = 1;
+}
+
+message ValidateTokenRequest {
+ string token = 1;
+}
+
+message ValidateTokenReply {
+ string username = 1;
+ repeated string roles = 2;
+ map<string, string> others = 3;
+}
+

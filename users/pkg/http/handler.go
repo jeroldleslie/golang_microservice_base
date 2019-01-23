@@ -101,7 +101,6 @@ func encodeGetByIdResponse(ctx context.Context, w http1.ResponseWriter, response
 	return
 }
 
-
 // makeHealthHandler creates the handler logic
 func makeHealthHandler(m *mux.Router, endpoints endpoint.Endpoints, options []http.ServerOption) {
 	m.Methods("GET").Path("/health").Handler(
@@ -110,7 +109,6 @@ func makeHealthHandler(m *mux.Router, endpoints endpoint.Endpoints, options []ht
 			handlers.AllowedOrigins([]string{"*"}))(
 			http.NewServer(endpoints.HealthEndpoint, decodeHealthRequest, encodeHealthResponse, options...)))
 }
-
 
 // decodeHealthResponse  is a transport/http.DecodeRequestFunc that decodes a
 // JSON-encoded request from the HTTP request body.
@@ -123,6 +121,34 @@ func decodeHealthRequest(_ context.Context, r *http1.Request) (interface{}, erro
 // encodeHealthResponse is a transport/http.EncodeResponseFunc that encodes
 // the response as JSON to the response writer
 func encodeHealthResponse(ctx context.Context, w http1.ResponseWriter, response interface{}) (err error) {
+	w.Header().Set("Content-Type", "application/json; charset=utf-8")
+	err = json.NewEncoder(w).Encode(response)
+	return
+}
+
+// makeLoginHandler creates the handler logic
+func makeLoginHandler(m *mux.Router, endpoints endpoint.Endpoints, options []http.ServerOption) {
+	m.Methods("POST").Path("/login").Handler(
+		handlers.CORS(handlers.AllowedMethods([]string{"POST", "OPTIONS"}),
+			handlers.AllowedOrigins([]string{"*"}))(
+			http.NewServer(endpoints.LoginEndpoint, decodeLoginRequest, encodeLoginResponse, options...)))
+}
+
+// decodeLoginResponse  is a transport/http.DecodeRequestFunc that decodes a
+// JSON-encoded request from the HTTP request body.
+func decodeLoginRequest(_ context.Context, r *http1.Request) (interface{}, error) {
+	req := endpoint.LoginRequest{}
+	err := json.NewDecoder(r.Body).Decode(&req)
+	return req, err
+}
+
+// encodeLoginResponse is a transport/http.EncodeResponseFunc that encodes
+// the response as JSON to the response writer
+func encodeLoginResponse(ctx context.Context, w http1.ResponseWriter, response interface{}) (err error) {
+	if f, ok := response.(endpoint.Failure); ok && f.Failed() != nil {
+		ErrorEncoder(ctx, f.Failed(), w)
+		return nil
+	}
 	w.Header().Set("Content-Type", "application/json; charset=utf-8")
 	err = json.NewEncoder(w).Encode(response)
 	return

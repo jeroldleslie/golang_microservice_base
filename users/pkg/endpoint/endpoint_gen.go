@@ -2,8 +2,8 @@
 package endpoint
 
 import (
-	service "go-microservice-base/users/pkg/service"
 	endpoint "github.com/go-kit/kit/endpoint"
+	service "go-microservice-base/users/pkg/service"
 )
 
 // Endpoints collects all of the endpoints that compose a profile service. It's
@@ -13,6 +13,7 @@ type Endpoints struct {
 	HealthEndpoint  endpoint.Endpoint
 	CreateEndpoint  endpoint.Endpoint
 	GetByIdEndpoint endpoint.Endpoint
+	LoginEndpoint   endpoint.Endpoint
 }
 
 // New returns a Endpoints struct that wraps the provided service, and wires in all of the
@@ -22,6 +23,7 @@ func New(s service.UsersService, mdw map[string][]endpoint.Middleware) Endpoints
 		CreateEndpoint:  MakeCreateEndpoint(s),
 		GetByIdEndpoint: MakeGetByIdEndpoint(s),
 		HealthEndpoint:  MakeHealthEndpoint(s),
+		LoginEndpoint:   MakeLoginEndpoint(s),
 	}
 	for _, m := range mdw["Health"] {
 		eps.HealthEndpoint = m(eps.HealthEndpoint)
@@ -31,6 +33,9 @@ func New(s service.UsersService, mdw map[string][]endpoint.Middleware) Endpoints
 	}
 	for _, m := range mdw["GetById"] {
 		eps.GetByIdEndpoint = m(eps.GetByIdEndpoint)
+	}
+	for _, m := range mdw["Login"] {
+		eps.LoginEndpoint = m(eps.LoginEndpoint)
 	}
 	return eps
 }

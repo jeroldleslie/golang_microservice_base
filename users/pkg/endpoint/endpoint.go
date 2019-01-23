@@ -15,7 +15,6 @@ type CreateRequest struct {
 
 // CreateResponse collects the response parameters for the Create method.
 type CreateResponse struct {
-	T     io.User `json:"user"`
 	Error error   `json:"error"`
 }
 
@@ -23,10 +22,9 @@ type CreateResponse struct {
 func MakeCreateEndpoint(s service.UsersService) endpoint.Endpoint {
 	return func(ctx context.Context, request interface{}) (interface{}, error) {
 		req := request.(CreateRequest)
-		t, error := s.Create(ctx, req.User)
+		error := s.Create(ctx, req.User)
 		return CreateResponse{
 			Error: error,
-			T:     t,
 		}, nil
 	}
 }
@@ -44,13 +42,13 @@ type Failure interface {
 }
 
 // Create implements Service. Primarily useful in a client.
-func (e Endpoints) Create(ctx context.Context, user io.User) (u io.User, error error) {
+func (e Endpoints) Create(ctx context.Context, user io.User) (error error) {
 	request := CreateRequest{User: user}
 	response, err := e.CreateEndpoint(ctx, request)
 	if err != nil {
 		return
 	}
-	return response.(CreateResponse).T, response.(CreateResponse).Error
+	return response.(CreateResponse).Error
 }
 
 // GetByIdRequest collects the request parameters for the GetById method.
@@ -115,4 +113,42 @@ func (e Endpoints) Health(ctx context.Context) (status bool) {
 		return
 	}
 	return response.(HealthResponse).Status
+}
+
+// LoginRequest collects the request parameters for the Login method.
+type LoginRequest struct {
+	Auth io.Authentication `json:"auth"`
+}
+
+// LoginResponse collects the response parameters for the Login method.
+type LoginResponse struct {
+	Token     string `json:"token"`
+	Error error   `json:"error"`
+}
+
+// MakeLoginEndpoint returns an endpoint that invokes Login on the service.
+func MakeLoginEndpoint(s service.UsersService) endpoint.Endpoint {
+	return func(ctx context.Context, request interface{}) (interface{}, error) {
+		req := request.(LoginRequest)
+		token, error := s.Login(ctx, req.Auth)
+		return LoginResponse{
+			Error: error,
+			Token:     token,
+		}, nil
+	}
+}
+
+// Failed implements Failer.
+func (r LoginResponse) Failed() error {
+	return r.Error
+}
+
+// Login implements Service. Primarily useful in a client.
+func (e Endpoints) Login(ctx context.Context, auth io.Authentication) (token string, error error) {
+	request := LoginRequest{Auth: auth}
+	response, err := e.LoginEndpoint(ctx, request)
+	if err != nil {
+		return
+	}
+	return response.(LoginResponse).Token, response.(LoginResponse).Error
 }

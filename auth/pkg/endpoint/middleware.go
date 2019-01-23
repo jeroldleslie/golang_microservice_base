@@ -5,9 +5,9 @@ import (
 	"fmt"
 	"time"
 
-		"github.com/go-kit/kit/endpoint"
-	"github.com/go-kit/kit/log"
-	"github.com/go-kit/kit/metrics"
+	endpoint "github.com/go-kit/kit/endpoint"
+	log "github.com/go-kit/kit/log"
+	metrics "github.com/go-kit/kit/metrics"
 )
 
 // InstrumentingMiddleware returns an endpoint middleware that records
@@ -20,7 +20,6 @@ func InstrumentingMiddleware(duration metrics.Histogram) endpoint.Middleware {
 			defer func(begin time.Time) {
 				duration.With("success", fmt.Sprint(err == nil)).Observe(time.Since(begin).Seconds())
 			}(time.Now())
-
 			return next(ctx, request)
 		}
 	}
@@ -44,7 +43,6 @@ func AuthMiddleware() endpoint.Middleware {
 	return func(next endpoint.Endpoint) endpoint.Endpoint {
 		return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 			// Add your middleware logic here
-			//return nil, errors.New("five kilometer auth error")
 			return next(ctx, request)
 		}
 	}

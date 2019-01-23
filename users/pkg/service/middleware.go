@@ -24,10 +24,9 @@ func LoggingMiddleware(logger log.Logger) Middleware {
 
 }
 
-func (l loggingMiddleware) Create(ctx context.Context, user_in io.User) (user_out io.User, error error) {
+func (l loggingMiddleware) Create(ctx context.Context, user_in io.User) (error error) {
 	defer func() {
-		l.logger.Log("log","Service middleware logging now .................")
-		l.logger.Log("method", "Create", "user_in", user_in, "user_out", user_out, "error", error)
+		l.logger.Log("method", "Create", "user_in", user_in, "error", error)
 	}()
 	return l.next.Create(ctx, user_in)
 }
@@ -44,4 +43,11 @@ func (l loggingMiddleware) Health(ctx context.Context) (status bool) {
 		l.logger.Log("method", "Health", "status", status)
 	}()
 	return l.next.Health(ctx)
+}
+
+func (l loggingMiddleware) Login(ctx context.Context, auth io.Authentication) (token string, error error) {
+	defer func() {
+		l.logger.Log("method", "Login", "auth", auth, "token", token, "error", error)
+	}()
+	return l.next.Login(ctx, auth)
 }

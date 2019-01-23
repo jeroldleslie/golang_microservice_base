@@ -1,5 +1,5 @@
-hash: 3224a1dbd761b4cd27715299dd4dca072e98f7518458c5f1f4ce3478259d3ca7
-updated: 2018-12-02T13:48:50.668014+05:30
+hash: 77c8d0af36b4c3f860b9031a957359592717d3b078d0d2b4a2e0fc718e123a77
+updated: 2018-12-04T15:49:07.328531+05:30
 imports:
 - name: github.com/apache/thrift
   version: 2c69b5a01e589c19855a00b68596d0564bb2bb5b
@@ -164,6 +164,11 @@ imports:
   version: f58768cc1a7a7e77a3bd49e98cdd21419399b6a3
 - name: github.com/Shopify/sarama
   version: 96e43a884d5ef985c98dc02e5ec6904a2b8b1d1c
+- name: golang.org/x/crypto
+  version: 505ab145d0a99da450461ae2c1a9f6cd10d1f447
+  subpackages:
+  - bcrypt
+  - blowfish
 - name: golang.org/x/net
   version: 351d144fa1fc0bd934e2408202be0c29f25e35a0
   subpackages:

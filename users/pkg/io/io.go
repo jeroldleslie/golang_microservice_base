@@ -7,13 +7,13 @@ import (
 
 type User struct {
 	Id        bson.ObjectId `json:"id" bson:"_id"`
-	Username  string        `json:"username"  bson:"username"`
-	Password  string        `json:"password"  bson:"password"`
-	Firstname string        `json:"firstname"  bson:"firstname"`
-	Lastname  string        `json:"lastname"  bson:"lastname"`
-	Usertype  string        `json:"usertype"  bson:"usertype"`
-	Email     string        `json:"email"  bson:"email"`
-	Phone     string        `json:"phone"  bson:"phone"`
+	Username  string        `json:"username,omitempty"  bson:"username,omitempty"`
+	Password  string        `json:"password,omitempty"  bson:"password,omitempty"`
+	Firstname string        `json:"firstname,omitempty"  bson:"firstname,omitempty"`
+	Lastname  string        `json:"lastname,omitempty"  bson:"lastname,omitempty"`
+	Usertype  string        `json:"usertype,omitempty"  bson:"usertype,omitempty"`
+	Email     string        `json:"email,omitempty"  bson:"email,omitempty"`
+	Phone     string        `json:"phone,omitempty"  bson:"phone,omitempty"`
 }
 
 func (u User) String() string {

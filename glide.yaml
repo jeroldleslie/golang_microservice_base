@@ -15,3 +15,6 @@ import:
   - api
 - package: github.com/satori/go.uuid
   version: v1.2.0
+- package: golang.org/x/crypto
+  subpackages:
+  - bcrypt

@@ -2,9 +2,9 @@
 package http
 
 import (
-	endpoint "go-microservice-base/users/pkg/endpoint"
 	http "github.com/go-kit/kit/transport/http"
 	mux "github.com/gorilla/mux"
+	endpoint "go-microservice-base/users/pkg/endpoint"
 	http1 "net/http"
 )
 
@@ -12,9 +12,12 @@ import (
 // predefined paths.
 func NewHTTPHandler(endpoints endpoint.Endpoints, options map[string][]http.ServerOption) http1.Handler {
 	m := mux.NewRouter()
-	s := m.PathPrefix("/api/v1/users").Subrouter()
 	makeHealthHandler(m, endpoints, options["Health"])
+
+	s := m.PathPrefix("/api/v1/users").Subrouter()
+	makeLoginHandler(s, endpoints, options["Login"])
 	makeCreateHandler(s, endpoints, options["Create"])
 	makeGetByIdHandler(s, endpoints, options["GetById"])
+
 	return m
 }
