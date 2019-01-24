@@ -5,14 +5,15 @@ import (
 	"errors"
 	"go-microservice-base/users/pkg/db"
 	"go-microservice-base/users/pkg/io"
-
 	"go-microservice-base/notificator/pkg/grpc/pb"
-
+	"go-microservice-base/users/pkg/utils"
+	error1 "go-microservice-base/users/pkg/errors"
 	"github.com/go-kit/kit/log"
 	"google.golang.org/grpc"
 	"gopkg.in/mgo.v2/bson"
 	"golang.org/x/crypto/bcrypt"
 	"fmt"
+	"github.com/SermoDigital/jose/crypto"
 )
 
 type Config struct {
@@ -24,7 +25,7 @@ type Config struct {
 type UsersService interface {
 	// Add your methods here
 	Health(ctx context.Context) (status bool)
-	Create(ctx context.Context, user io.User) (error error)
+	Create(ctx context.Context, user io.User) (u io.User, error error)
 	GetById(ctx context.Context, id string) (u io.User, error error)
 	Login(ctx context.Context, auth io.Authentication) (token string, error error)
 }
@@ -65,16 +66,16 @@ func bsonObject(idStr string) (bson.ObjectId, error) {
 		_id = bson.ObjectIdHex(idStr)
 		return _id, nil
 	} else {
-		return _id, errors.New("invalid id")
+		return _id, errors.New(error1.InvalidId)
 	}
 }
 
-func (b *basicUsersService) Create(ctx context.Context, user io.User) (error error) {
+func (b *basicUsersService) Create(ctx context.Context, user io.User) (io.User, error) {
 	l := b.logger
 
 	c, err := db.GetUsersCollection(b.logger)
 	if err != nil {
-		return err
+		return io.User{}, err
 	}
 	defer c.Database.Session.Close()
 
@@ -82,14 +83,14 @@ func (b *basicUsersService) Create(ctx context.Context, user io.User) (error err
 	// Generates a hashed version of our password
 	hashedPass, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
 	if err != nil {
-		return errors.New(fmt.Sprintf("error hashing password: %v", err))
+		return io.User{}, errors.New(fmt.Sprintf("error hashing password: %v", err))
 	}
 	user.Password = string(hashedPass)
 
-	l.Log("user.Password",user.Password)
-	error = c.Insert(&user)
+	l.Log("user.Password", user.Password)
+	err = c.Insert(&user)
 
-	if error == nil {
+	if err == nil {
 		//notify users
 
 		reply, err := b.notificatorServiceClient.Notify(context.Background(), &pb.NotifyRequest{
@@ -106,11 +107,12 @@ func (b *basicUsersService) Create(ctx context.Context, user io.User) (error err
 			l.Log("notificator_err", err)
 			// TODO handle reply failure
 		}
+		user.Password = ""
+		return user, nil
 	} else {
-		l.Log("error", error)
+		l.Log("error", err)
+		return io.User{}, err
 	}
-
-	return error
 }
 
 func (b *basicUsersService) GetById(ctx context.Context, id string) (u io.User, error error) {
@@ -127,6 +129,7 @@ func (b *basicUsersService) GetById(ctx context.Context, id string) (u io.User, 
 	}
 
 	error = c.Find(bson.M{"_id": _id}).One(&u)
+	u.Password = ""
 	return u, error
 }
 
@@ -135,8 +138,13 @@ func (b *basicUsersService) Health(ctx context.Context) (status bool) {
 	return status
 }
 
+var (
+	key    = []byte("ru-rocker")
+	method = crypto.SigningMethodHS256
+)
+
 func (b *basicUsersService) Login(ctx context.Context, auth io.Authentication) (token string, error error) {
-	// TODO implement the business logic of Login
+
 	l := b.logger
 
 	c, err := db.GetUsersCollection(b.logger)
@@ -147,9 +155,9 @@ func (b *basicUsersService) Login(ctx context.Context, auth io.Authentication) (
 	var user io.User
 	error = c.Find(bson.M{"username": auth.Username}).One(&user)
 	if error != nil {
-		return "",errors.New("invalid username or password")
+		return "", errors.New("invalid username or password")
 	}
-	//l.Log("logged in user", u.String())
+	l.Log("logged in user", user.String())
 
 	// Compares our given password against the hashed password
 	// stored in the database
@@ -157,6 +165,15 @@ func (b *basicUsersService) Login(ctx context.Context, auth io.Authentication) (
 		return "", errors.New("invalid username or password")
 	}
 
-	l.Log("auth", auth)
-	return token, error
+	jwtAuth, err := utils.InitJWTAuthenticationBackend()
+	if err != nil {
+		return "", err
+	}
+
+	// TODO check jwt token in centralized store for this user return if exists or create new one
+	// TODO check exp time
+	tokenString, err := jwtAuth.GenerateToken(user.Id.Hex())
+	// TODO store jwt claims in centralized store
+	return tokenString, error
+
 }

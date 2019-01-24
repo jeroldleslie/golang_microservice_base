@@ -43,5 +43,7 @@ services:
     environment:
     - SERVICE_ADVERTISE_ADDRESS=192.168.0.6
     - SERVICE_ADVERTISE_PORT=8800
+    - FIVEKILOMETER_PRIVATE_KEY=/go/src/go-microservice-base/resources/keys/private_key.pem
+    - FIVEKILOMETER_PUBLIC_KEY=/go/src/go-microservice-base/resources/keys/public_key.pem
 
 

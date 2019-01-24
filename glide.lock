@@ -1,5 +1,5 @@
-hash: 77c8d0af36b4c3f860b9031a957359592717d3b078d0d2b4a2e0fc718e123a77
-updated: 2018-12-04T15:49:07.328531+05:30
+hash: b1eae28daa802cffe5d56277daaffb99c99539befe7f83d8973291a24686d1c7
+updated: 2019-01-24T19:57:06.013057+05:30
 imports:
 - name: github.com/apache/thrift
   version: 2c69b5a01e589c19855a00b68596d0564bb2bb5b
@@ -19,6 +19,8 @@ imports:
   version: d8f796af33cc11cb798c1aaeb27a4ebc5099927d
   subpackages:
   - spew
+- name: github.com/dgrijalva/jwt-go
+  version: 06ea1031745cb8b3dab3f6a236daf2b0aa468b7e
 - name: github.com/eapache/go-resiliency
   version: ea41b0fad31007accc7f806884dcdf3da98b79ce
   subpackages:
@@ -30,6 +32,7 @@ imports:
 - name: github.com/go-kit/kit
   version: 12210fb6ace19e0496167bb3e667dcd91fa9f69b
   subpackages:
+  - auth/jwt
   - endpoint
   - log
   - metrics
@@ -86,6 +89,8 @@ imports:
   - coordinate
 - name: github.com/kr/logfmt
   version: b84e30acd515aadc4b783ad4ff83aff3299bdfe0
+- name: github.com/leonelquinteros/gorand
+  version: 6e796a4848060348a467bdf52eff3ca92bc4599b
 - name: github.com/lightstep/lightstep-tracer-go
   version: c9cafc033badd91d4e27900874429fc30a5ffdc2
   subpackages:
@@ -162,10 +167,14 @@ imports:
   version: 3113b8401b8a98917cde58f8bbd42a1b1c03b1fd
 - name: github.com/satori/go.uuid
   version: f58768cc1a7a7e77a3bd49e98cdd21419399b6a3
+- name: github.com/SermoDigital/jose
+  version: f6df55f235c24f236d11dbcf665249a59ac2021f
+  subpackages:
+  - crypto
 - name: github.com/Shopify/sarama
   version: 96e43a884d5ef985c98dc02e5ec6904a2b8b1d1c
 - name: golang.org/x/crypto
-  version: 505ab145d0a99da450461ae2c1a9f6cd10d1f447
+  version: 057139ce5d2bdbe6fe73c53679e24e9cf007f637
   subpackages:
   - bcrypt
   - blowfish

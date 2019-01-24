@@ -24,9 +24,9 @@ func LoggingMiddleware(logger log.Logger) Middleware {
 
 }
 
-func (l loggingMiddleware) Create(ctx context.Context, user_in io.User) (error error) {
+func (l loggingMiddleware) Create(ctx context.Context, user_in io.User) (user_out io.User, err error) {
 	defer func() {
-		l.logger.Log("method", "Create", "user_in", user_in, "error", error)
+		l.logger.Log("method", "Create", "user_in", user_in, "error", err)
 	}()
 	return l.next.Create(ctx, user_in)
 }

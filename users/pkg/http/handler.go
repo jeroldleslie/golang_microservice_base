@@ -4,12 +4,13 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	endpoint "go-microservice-base/users/pkg/endpoint"
-	http1 "net/http"
-
-	http "github.com/go-kit/kit/transport/http"
-	handlers "github.com/gorilla/handlers"
-	mux "github.com/gorilla/mux"
+	"go-microservice-base/users/pkg/endpoint"
+		http1 "net/http"
+	apperrors "go-microservice-base/users/pkg/errors"
+	"github.com/go-kit/kit/transport/http"
+	"github.com/gorilla/handlers"
+	"github.com/gorilla/mux"
+	"github.com/go-kit/kit/auth/jwt"
 )
 
 // makeCreateHandler creates the handler logic
@@ -54,12 +55,7 @@ func ErrorDecoder(r *http1.Response) error {
 // This is used to set the http status, see an example here :
 // https://github.com/go-kit/kit/blob/master/examples/addsvc/pkg/addtransport/http.go#L133
 func err2code(err error) int {
-	if err.Error() == "invalid id" {
-		return http1.StatusBadRequest
-	} else if err.Error() == "not found" {
-		return http1.StatusNotFound
-	}
-	return http1.StatusInternalServerError
+	return apperrors.StatusCode(err.Error())
 }
 
 type errorWrapper struct {
@@ -71,12 +67,12 @@ func makeGetByIdHandler(m *mux.Router, endpoints endpoint.Endpoints, options []h
 	m.Methods("GET").Path("/get-by-id/{id}").Handler(
 		handlers.CORS(handlers.AllowedMethods([]string{"GET"}),
 			handlers.AllowedOrigins([]string{"*"}))(
-			http.NewServer(endpoints.GetByIdEndpoint, decodeGetByIdRequest, encodeGetByIdResponse, options...)))
+			http.NewServer(endpoints.GetByIdEndpoint, decodeGetByIdRequest, encodeGetByIdResponse, append(options, http.ServerBefore(jwt.HTTPToContext()))...)))
 }
 
 // decodeGetByIdResponse  is a transport/http.DecodeRequestFunc that decodes a
 // JSON-encoded request from the HTTP request body.
-func decodeGetByIdRequest(_ context.Context, r *http1.Request) (interface{}, error) {
+func decodeGetByIdRequest(ctx context.Context, r *http1.Request) (interface{}, error) {
 	vars := mux.Vars(r)
 	id, ok := vars["id"]
 	if !ok {
@@ -85,8 +81,10 @@ func decodeGetByIdRequest(_ context.Context, r *http1.Request) (interface{}, err
 	req := endpoint.GetByIdRequest{
 		Id: id,
 	}
-	err := json.NewDecoder(r.Body).Decode(&req)
-	return req, err
+	tokenString := "mytokenstringleslie"
+	ctx = context.WithValue(ctx, "JWTToken", tokenString)
+	//err := json.NewDecoder(r.Body).Decode(&req)
+	return req, nil
 }
 
 // encodeGetByIdResponse is a transport/http.EncodeResponseFunc that encodes

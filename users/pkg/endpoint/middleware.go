@@ -4,10 +4,14 @@ import (
 	"context"
 	"fmt"
 	"time"
-
-		"github.com/go-kit/kit/endpoint"
+	"errors"
+	error1 "go-microservice-base/users/pkg/errors"
+	"github.com/go-kit/kit/endpoint"
 	"github.com/go-kit/kit/log"
 	"github.com/go-kit/kit/metrics"
+	"github.com/go-kit/kit/auth/jwt"
+	jwt1 "github.com/dgrijalva/jwt-go"
+	"go-microservice-base/users/pkg/utils"
 )
 
 // InstrumentingMiddleware returns an endpoint middleware that records
@@ -44,8 +48,36 @@ func AuthMiddleware() endpoint.Middleware {
 	return func(next endpoint.Endpoint) endpoint.Endpoint {
 		return func(ctx context.Context, request interface{}) (response interface{}, err error) {
 			// Add your middleware logic here
-			//return nil, errors.New("five kilometer auth error")
-			return next(ctx, request)
+			jwtAuth, err := utils.InitJWTAuthenticationBackend()
+
+			tokenString, ok := ctx.(context.Context).Value(jwt.JWTTokenContextKey).(string)
+			if !ok {
+				return nil, errors.New(error1.TokenNotExists)
+			}
+
+			token, err := jwt1.Parse(tokenString, func(token *jwt1.Token) (interface{}, error) {
+				if _, ok := token.Method.(*jwt1.SigningMethodRSA); !ok {
+					return nil, fmt.Errorf(error1.IncorrectSigningMethod)
+				} else {
+					return jwtAuth.PublicKey, nil
+				}
+			})
+
+			if token.Valid {
+				return next(ctx, request)
+			} else if ve, ok := err.(*jwt1.ValidationError); ok {
+				if ve.Errors&jwt1.ValidationErrorMalformed != 0 {
+					return nil, errors.New(error1.NotToken)
+				} else if ve.Errors&(jwt1.ValidationErrorExpired|jwt1.ValidationErrorNotValidYet) != 0 {
+					// Token is either expired or not active yet
+					return nil, errors.New(error1.TimeExpired)
+				} else {
+					return nil, errors.New(error1.InvalidToken)
+				}
+			} else {
+				return nil, errors.New(error1.CantHandleToken)
+			}
+
 		}
 	}
 }
