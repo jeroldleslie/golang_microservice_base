@@ -17,6 +17,9 @@ const (
 	TimeExpired            = "time expired"
 	InvalidToken           = "invalid token"
 	CantHandleToken        = "couldn't handle this token"
+
+	//Field errors
+	EmailExists = "email already exists"
 )
 
 var statusCode = map[string]int{
@@ -30,6 +33,7 @@ var statusCode = map[string]int{
 	TimeExpired:            http.StatusUnauthorized,
 	InvalidToken:           http.StatusUnauthorized,
 	CantHandleToken:        http.StatusUnauthorized,
+	EmailExists:            http.StatusBadRequest,
 }
 
 func StatusCode(error string) int {

@@ -14,6 +14,7 @@ import (
 	"golang.org/x/crypto/bcrypt"
 	"fmt"
 	"github.com/SermoDigital/jose/crypto"
+	"gopkg.in/mgo.v2"
 )
 
 type Config struct {
@@ -111,7 +112,12 @@ func (b *basicUsersService) Create(ctx context.Context, user io.User) (io.User, 
 		return user, nil
 	} else {
 		l.Log("error", err)
-		return io.User{}, err
+		if mgo.IsDup(err) {
+			return io.User{},errors.New("email already exists")
+		}else{
+			return io.User{}, err
+		}
+
 	}
 }
 
@@ -153,11 +159,12 @@ func (b *basicUsersService) Login(ctx context.Context, auth io.Authentication) (
 	}
 	defer c.Database.Session.Close()
 	var user io.User
-	error = c.Find(bson.M{"username": auth.Username}).One(&user)
+	error = c.Find(bson.M{"email": auth.Email}).One(&user)
 	if error != nil {
+		l.Log("error", error)
 		return "", errors.New("invalid username or password")
 	}
-	l.Log("logged in user", user.String())
+	//l.Log("logged in user", user.String())
 
 	// Compares our given password against the hashed password
 	// stored in the database

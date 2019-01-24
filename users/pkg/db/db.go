@@ -23,6 +23,7 @@ func GetMongoSession() (*mgo.Session, error) {
 	return mgoSession.Clone(), nil
 }
 
+
 func EnsureIndexOnAllCollections(logger log.Logger) error {
 	// TODO find a better way to ensure mondodb index in application init
 	session, err := GetMongoSession()
@@ -32,7 +33,7 @@ func EnsureIndexOnAllCollections(logger log.Logger) error {
 	}
 	c := session.DB("go-microservice-base").C("users")
 	index := &mgo.Index{
-		Key:        []string{"id", "username"},
+		Key:        []string{"id", "email"},
 		Unique:     true,
 		DropDups:   true,
 		Background: true,

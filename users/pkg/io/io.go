@@ -7,7 +7,6 @@ import (
 
 type User struct {
 	Id        bson.ObjectId `json:"id" bson:"_id"`
-	Username  string        `json:"username,omitempty"  bson:"username,omitempty"`
 	Password  string        `json:"password,omitempty"  bson:"password,omitempty"`
 	Firstname string        `json:"firstname,omitempty"  bson:"firstname,omitempty"`
 	Lastname  string        `json:"lastname,omitempty"  bson:"lastname,omitempty"`
@@ -24,10 +23,9 @@ func (u User) String() string {
 	return string(b)
 }
 
-
 type Authentication struct {
-	Username  string        `json:"username"  bson:"username"`
-	Password  string        `json:"password"  bson:"password"`
+	Email    string `json:"email"  bson:"email"`
+	Password string `json:"password"  bson:"password"`
 }
 
 func (a Authentication) String() string {

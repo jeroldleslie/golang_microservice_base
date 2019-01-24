@@ -31,6 +31,7 @@ func (l loggingMiddleware) Create(ctx context.Context, user_in io.User) (user_ou
 	return l.next.Create(ctx, user_in)
 }
 
+
 func (l loggingMiddleware) GetById(ctx context.Context, id string) (u io.User, error error) {
 	defer func() {
 		l.logger.Log("method", "GetById", "id", id, "u", u, "error", error)
@@ -47,7 +48,7 @@ func (l loggingMiddleware) Health(ctx context.Context) (status bool) {
 
 func (l loggingMiddleware) Login(ctx context.Context, auth io.Authentication) (token string, error error) {
 	defer func() {
-		l.logger.Log("method", "Login", "auth", auth, "token", token, "error", error)
+		l.logger.Log("method", "Login", "auth", auth, "error", error)
 	}()
 	return l.next.Login(ctx, auth)
 }
