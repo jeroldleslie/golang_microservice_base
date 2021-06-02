@@ -2,9 +2,10 @@ package endpoint
 
 import (
 	"context"
-	service "go-microservice-base/notificator/pkg/service"
 
 	endpoint "github.com/go-kit/kit/endpoint"
+
+	"github.com/jeroldleslie/golang_microservice_base/notificator/pkg/service"
 )
 
 // HealthRequest collects the request parameters for the Health method.

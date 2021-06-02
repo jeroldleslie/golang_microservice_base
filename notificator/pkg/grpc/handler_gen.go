@@ -2,9 +2,10 @@
 package grpc
 
 import (
-	endpoint "go-microservice-base/notificator/pkg/endpoint"
-	pb "go-microservice-base/notificator/pkg/grpc/pb"
 	grpc "github.com/go-kit/kit/transport/grpc"
+
+	"github.com/jeroldleslie/golang_microservice_base/notificator/pkg/endpoint"
+	"github.com/jeroldleslie/golang_microservice_base/notificator/pkg/grpc/pb"
 )
 
 // NewGRPCServer makes a set of endpoints available as a gRPC AddServer

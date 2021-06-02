@@ -2,8 +2,9 @@
 package endpoint
 
 import (
-	service "go-microservice-base/users/pkg/service"
 	endpoint "github.com/go-kit/kit/endpoint"
+
+	"github.com/jeroldleslie/golang_microservice_base/users/pkg/service"
 )
 
 // Endpoints collects all of the endpoints that compose a profile service. It's

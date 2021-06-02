@@ -2,10 +2,12 @@ package grpc
 
 import (
 	"context"
-	"go-microservice-base/notificator/pkg/endpoint"
-	"go-microservice-base/notificator/pkg/grpc/pb"
+
 	"github.com/go-kit/kit/transport/grpc"
 	context1 "golang.org/x/net/context"
+
+	"github.com/jeroldleslie/golang_microservice_base/notificator/pkg/endpoint"
+	"github.com/jeroldleslie/golang_microservice_base/notificator/pkg/grpc/pb"
 )
 
 // makeNotifyHandler creates the handler logic

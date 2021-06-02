@@ -2,10 +2,12 @@
 package http
 
 import (
-	endpoint "go-microservice-base/users/pkg/endpoint"
+	http1 "net/http"
+
 	http "github.com/go-kit/kit/transport/http"
 	mux "github.com/gorilla/mux"
-	http1 "net/http"
+
+	"github.com/jeroldleslie/golang_microservice_base/users/pkg/endpoint"
 )
 
 //  NewHTTPHandler returns a handler that makes a set of endpoints available on

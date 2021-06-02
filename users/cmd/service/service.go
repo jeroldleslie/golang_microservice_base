@@ -1,10 +1,6 @@
 package service
 
 import (
-	"go-microservice-base/users/pkg/endpoint"
-	"go-microservice-base/users/pkg/http"
-	"go-microservice-base/users/pkg/service"
-	"go-microservice-base/users/pkg/db"
 	"flag"
 	"fmt"
 	"net"
@@ -25,6 +21,10 @@ import (
 	"sourcegraph.com/sourcegraph/appdash"
 	"sourcegraph.com/sourcegraph/appdash/opentracing"
 
+	"github.com/jeroldleslie/golang_microservice_base/users/pkg/db"
+	"github.com/jeroldleslie/golang_microservice_base/users/pkg/endpoint"
+	"github.com/jeroldleslie/golang_microservice_base/users/pkg/http"
+	"github.com/jeroldleslie/golang_microservice_base/users/pkg/service"
 )
 
 var tracer opentracinggo.Tracer
@@ -89,11 +89,11 @@ func Run() {
 
 	err := db.EnsureIndexOnAllCollections(logger)
 	if err != nil {
-		logger.Log("err",err)
+		logger.Log("err", err)
 		panic(err)
 	}
 
-	svc := service.New(getServiceMiddleware(logger),logger)
+	svc := service.New(getServiceMiddleware(logger), logger)
 	eps := endpoint.New(svc, getEndpointMiddleware(logger))
 	g := createService(eps)
 	initMetricsEndpoint(g)

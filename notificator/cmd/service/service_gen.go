@@ -2,16 +2,17 @@
 package service
 
 import (
-	endpoint "go-microservice-base/notificator/pkg/endpoint"
 	endpoint1 "github.com/go-kit/kit/endpoint"
 	log "github.com/go-kit/kit/log"
+	prometheus "github.com/go-kit/kit/metrics/prometheus"
 	opentracing "github.com/go-kit/kit/tracing/opentracing"
 	grpc "github.com/go-kit/kit/transport/grpc"
 	http "github.com/go-kit/kit/transport/http"
 	group "github.com/oklog/oklog/pkg/group"
 	opentracinggo "github.com/opentracing/opentracing-go"
-	service "go-microservice-base/notificator/pkg/service"
-	prometheus "github.com/go-kit/kit/metrics/prometheus"
+
+	"github.com/jeroldleslie/golang_microservice_base/notificator/pkg/endpoint"
+	"github.com/jeroldleslie/golang_microservice_base/notificator/pkg/service"
 )
 
 func createService(endpoints endpoint.Endpoints) (g *group.Group) {

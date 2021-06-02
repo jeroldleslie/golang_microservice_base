@@ -3,13 +3,14 @@ package service
 import (
 	"context"
 	"errors"
-	"go-microservice-base/users/pkg/db"
-	"go-microservice-base/users/pkg/io"
 
-	"gopkg.in/mgo.v2/bson"
-	"go-microservice-base/notificator/pkg/grpc/pb"
-	"google.golang.org/grpc"
 	"github.com/go-kit/kit/log"
+	"google.golang.org/grpc"
+	"gopkg.in/mgo.v2/bson"
+
+	"github.com/jeroldleslie/golang_microservice_base/notificator/pkg/grpc/pb"
+	"github.com/jeroldleslie/golang_microservice_base/users/pkg/db"
+	"github.com/jeroldleslie/golang_microservice_base/users/pkg/io"
 )
 
 type Config struct {

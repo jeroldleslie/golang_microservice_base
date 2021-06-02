@@ -1,12 +1,7 @@
 package service
 
 import (
-	"go-microservice-base/notificator/pkg/endpoint"
-	"go-microservice-base/notificator/pkg/grpc"
-	"go-microservice-base/notificator/pkg/grpc/pb"
-	"go-microservice-base/notificator/pkg/http"
-	"go-microservice-base/notificator/pkg/service"
-		"flag"
+	"flag"
 	"fmt"
 	"net"
 	http1 "net/http"
@@ -26,7 +21,13 @@ import (
 	grpc1 "google.golang.org/grpc"
 	"sourcegraph.com/sourcegraph/appdash"
 	"sourcegraph.com/sourcegraph/appdash/opentracing"
-	)
+
+	"github.com/jeroldleslie/golang_microservice_base/notificator/pkg/endpoint"
+	"github.com/jeroldleslie/golang_microservice_base/notificator/pkg/grpc"
+	"github.com/jeroldleslie/golang_microservice_base/notificator/pkg/grpc/pb"
+	"github.com/jeroldleslie/golang_microservice_base/notificator/pkg/http"
+	"github.com/jeroldleslie/golang_microservice_base/notificator/pkg/service"
+)
 
 var tracer opentracinggo.Tracer
 var logger log.Logger
@@ -44,9 +45,9 @@ var lightstepToken = fs.String("lightstep-token", "", "Enable LightStep tracing 
 var appdashAddr = fs.String("appdash-addr", "", "Enable Appdash tracing via an Appdash server host:port")
 var consulAddr = fs.String("consul.addr", "consul", "consul address")
 var consulPort = fs.String("consul.port", "8500", "consul port")
+
 //var advertiseAddr = fs.String("advertise.addr", "notificator", "advertise address")
 //var advertisePort = fs.String("advertise.port", "8801", "advertise port")
-
 
 func Run() {
 	fs.Parse(os.Args[1:])
@@ -104,7 +105,6 @@ func Run() {
 		logger)
 
 	defer registrar.Deregister()
-
 
 	logger.Log("exit", g.Run())
 

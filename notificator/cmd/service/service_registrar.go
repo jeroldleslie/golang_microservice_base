@@ -1,15 +1,16 @@
 package service
 
 import (
-	"github.com/go-kit/kit/sd"
-	"github.com/go-kit/kit/log"
-	"os"
 	"math/rand"
-	"time"
-	"github.com/hashicorp/consul/api"
-	consulsd "github.com/go-kit/kit/sd/consul"
+	"os"
 	"strconv"
-	)
+	"time"
+
+	"github.com/go-kit/kit/log"
+	"github.com/go-kit/kit/sd"
+	consulsd "github.com/go-kit/kit/sd/consul"
+	"github.com/hashicorp/consul/api"
+)
 
 func registerService(consulAddress string,
 	consulPort string,
@@ -18,7 +19,6 @@ func registerService(consulAddress string,
 	logger log.Logger) (registrar sd.Registrar) {
 
 	rand.Seed(time.Now().UTC().UnixNano())
-
 
 	// Service discovery domain. In this example we use Consul.
 	var client consulsd.Client
@@ -33,9 +33,9 @@ func registerService(consulAddress string,
 		client = consulsd.NewClient(consulClient)
 	}
 
-	logger.Log("advertiseAddress",advertiseAddress, "advertisePort",advertisePort)
+	logger.Log("advertiseAddress", advertiseAddress, "advertisePort", advertisePort)
 	_http := "http://" + advertiseAddress + ":" + advertisePort + "/health"
-	logger.Log("_http",_http)
+	logger.Log("_http", _http)
 	check := api.AgentServiceCheck{
 		HTTP:     _http,
 		Interval: "30s",

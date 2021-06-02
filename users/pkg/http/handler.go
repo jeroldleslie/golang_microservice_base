@@ -4,12 +4,13 @@ import (
 	"context"
 	"encoding/json"
 	"errors"
-	endpoint "go-microservice-base/users/pkg/endpoint"
 	http1 "net/http"
 
 	http "github.com/go-kit/kit/transport/http"
 	handlers "github.com/gorilla/handlers"
 	mux "github.com/gorilla/mux"
+
+	"github.com/jeroldleslie/golang_microservice_base/users/pkg/endpoint"
 )
 
 // makeCreateHandler creates the handler logic
@@ -101,7 +102,6 @@ func encodeGetByIdResponse(ctx context.Context, w http1.ResponseWriter, response
 	return
 }
 
-
 // makeHealthHandler creates the handler logic
 func makeHealthHandler(m *mux.Router, endpoints endpoint.Endpoints, options []http.ServerOption) {
 	m.Methods("GET").Path("/health").Handler(
@@ -110,7 +110,6 @@ func makeHealthHandler(m *mux.Router, endpoints endpoint.Endpoints, options []ht
 			handlers.AllowedOrigins([]string{"*"}))(
 			http.NewServer(endpoints.HealthEndpoint, decodeHealthRequest, encodeHealthResponse, options...)))
 }
-
 
 // decodeHealthResponse  is a transport/http.DecodeRequestFunc that decodes a
 // JSON-encoded request from the HTTP request body.

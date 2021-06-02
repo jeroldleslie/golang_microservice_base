@@ -2,16 +2,17 @@
 package service
 
 import (
-	endpoint "go-microservice-base/users/pkg/endpoint"
-	http1 "go-microservice-base/users/pkg/http"
-	service "go-microservice-base/users/pkg/service"
 	endpoint1 "github.com/go-kit/kit/endpoint"
-	log "github.com/go-kit/kit/log"
-	prometheus "github.com/go-kit/kit/metrics/prometheus"
-	opentracing "github.com/go-kit/kit/tracing/opentracing"
-	http "github.com/go-kit/kit/transport/http"
-	group "github.com/oklog/oklog/pkg/group"
+	"github.com/go-kit/kit/log"
+	"github.com/go-kit/kit/metrics/prometheus"
+	"github.com/go-kit/kit/tracing/opentracing"
+	"github.com/go-kit/kit/transport/http"
+	"github.com/oklog/oklog/pkg/group"
 	opentracinggo "github.com/opentracing/opentracing-go"
+
+	"github.com/jeroldleslie/golang_microservice_base/users/pkg/endpoint"
+	http2 "github.com/jeroldleslie/golang_microservice_base/users/pkg/http"
+	"github.com/jeroldleslie/golang_microservice_base/users/pkg/service"
 )
 
 func createService(endpoints endpoint.Endpoints) (g *group.Group) {
@@ -21,8 +22,8 @@ func createService(endpoints endpoint.Endpoints) (g *group.Group) {
 }
 func defaultHttpOptions(logger log.Logger, tracer opentracinggo.Tracer) map[string][]http.ServerOption {
 	options := map[string][]http.ServerOption{
-		"Create":  {http.ServerErrorEncoder(http1.ErrorEncoder), http.ServerErrorLogger(logger), http.ServerBefore(opentracing.HTTPToContext(tracer, "Create", logger))},
-		"GetById": {http.ServerErrorEncoder(http1.ErrorEncoder), http.ServerErrorLogger(logger), http.ServerBefore(opentracing.HTTPToContext(tracer, "GetById", logger))},
+		"Create":  {http.ServerErrorEncoder(http2.ErrorEncoder), http.ServerErrorLogger(logger), http.ServerBefore(opentracing.HTTPToContext(tracer, "Create", logger))},
+		"GetById": {http.ServerErrorEncoder(http2.ErrorEncoder), http.ServerErrorLogger(logger), http.ServerBefore(opentracing.HTTPToContext(tracer, "GetById", logger))},
 		"Health":  {http.ServerErrorLogger(logger), http.ServerBefore(opentracing.HTTPToContext(tracer, "Health", logger))},
 	}
 	return options

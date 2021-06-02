@@ -2,9 +2,10 @@ package service
 
 import (
 	"context"
-	io "go-microservice-base/users/pkg/io"
 
 	log "github.com/go-kit/kit/log"
+
+	"github.com/jeroldleslie/golang_microservice_base/users/pkg/io"
 )
 
 // Middleware describes a service middleware.
@@ -26,7 +27,7 @@ func LoggingMiddleware(logger log.Logger) Middleware {
 
 func (l loggingMiddleware) Create(ctx context.Context, user_in io.User) (user_out io.User, error error) {
 	defer func() {
-		l.logger.Log("log","Service middleware logging now .................")
+		l.logger.Log("log", "Service middleware logging now .................")
 		l.logger.Log("method", "Create", "user_in", user_in, "user_out", user_out, "error", error)
 	}()
 	return l.next.Create(ctx, user_in)

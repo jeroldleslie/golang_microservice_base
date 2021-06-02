@@ -2,10 +2,11 @@ package endpoint
 
 import (
 	"context"
-	io "go-microservice-base/users/pkg/io"
-	service "go-microservice-base/users/pkg/service"
 
 	endpoint "github.com/go-kit/kit/endpoint"
+
+	"github.com/jeroldleslie/golang_microservice_base/users/pkg/io"
+	"github.com/jeroldleslie/golang_microservice_base/users/pkg/service"
 )
 
 // CreateRequest collects the request parameters for the Create method.

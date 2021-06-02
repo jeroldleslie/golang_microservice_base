@@ -3,11 +3,13 @@ package http
 import (
 	"context"
 	"encoding/json"
-	endpoint "go-microservice-base/notificator/pkg/endpoint"
-	http1 "github.com/go-kit/kit/transport/http"
 	"net/http"
-	"github.com/gorilla/mux"
+
+	http1 "github.com/go-kit/kit/transport/http"
 	"github.com/gorilla/handlers"
+	"github.com/gorilla/mux"
+
+	"github.com/jeroldleslie/golang_microservice_base/notificator/pkg/endpoint"
 )
 
 // makeHealthHandler creates the handler logic
@@ -18,7 +20,6 @@ func makeHealthHandler(m *mux.Router, endpoints endpoint.Endpoints, options []ht
 			handlers.AllowedOrigins([]string{"*"}))(
 			http1.NewServer(endpoints.HealthEndpoint, decodeHealthRequest, encodeHealthResponse, options...)))
 }
-
 
 // decodeHealthResponse  is a transport/http.DecodeRequestFunc that decodes a
 // JSON-encoded request from the HTTP request body.
