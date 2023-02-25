@@ -49,7 +49,7 @@ require (
 	github.com/prometheus/procfs v0.0.0-20181129180645-aa55a523dc0a // indirect
 	github.com/rcrowley/go-metrics v0.0.0-20181016184325-3113b8401b8a // indirect
 	github.com/stretchr/testify v1.7.0 // indirect
-	golang.org/x/net v0.0.0-20210428140749-89ef3d95e781
+	golang.org/x/net v0.7.0
 	google.golang.org/genproto v0.0.0-20181127195345-31ac5d88444a // indirect
 	google.golang.org/grpc v1.16.0
 	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
