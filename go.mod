@@ -12,9 +12,7 @@ require (
 	github.com/eapache/go-resiliency v1.1.0 // indirect
 	github.com/eapache/go-xerial-snappy v0.0.0-20180814174437-776d5712da21 // indirect
 	github.com/eapache/queue v1.1.1-0.20180227141424-093482f3f8ce // indirect
-	github.com/go-kit/kit v0.8.0
-	github.com/go-logfmt/logfmt v0.4.0 // indirect
-	github.com/go-stack/stack v1.8.0 // indirect
+	github.com/go-kit/kit v0.9.0
 	github.com/gogo/protobuf v1.1.2-0.20181116123445-07eab6a8298c // indirect
 	github.com/golang/protobuf v1.5.2
 	github.com/golang/snappy v0.0.0-20180518054509-2e65f85255db // indirect
@@ -43,10 +41,7 @@ require (
 	github.com/openzipkin/zipkin-go-opentracing v0.3.5-0.20181124120047-c0f098ce0438
 	github.com/pascaldekloe/goe v0.1.0 // indirect
 	github.com/pierrec/lz4 v1.0.2-0.20181027085611-623b5a2f4d2a // indirect
-	github.com/pkg/errors v0.9.1 // indirect
-	github.com/prometheus/client_golang v0.9.2-0.20181121042956-32b1bb4674c4
-	github.com/prometheus/common v0.0.0-20181126121408-4724e9255275 // indirect
-	github.com/prometheus/procfs v0.0.0-20181129180645-aa55a523dc0a // indirect
+	github.com/prometheus/client_golang v1.11.1
 	github.com/rcrowley/go-metrics v0.0.0-20181016184325-3113b8401b8a // indirect
 	github.com/stretchr/testify v1.7.0 // indirect
 	golang.org/x/net v0.0.0-20210428140749-89ef3d95e781
